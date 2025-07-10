@@ -1,0 +1,42 @@
+[
+  {
+    "name": "pi1",
+    "remote_port": 43001
+  },
+  {
+    "name": "pi2",
+    "remote_port": 43002
+  },
+  {
+    "name": "pi3",
+    "remote_port": 43003
+  },
+  {
+    "name": "pi4",
+    "remote_port": 43004
+  },
+  {
+    "name": "pi5",
+    "remote_port": 43005
+  },
+  {
+    "name": "pi6",
+    "remote_port": 43006
+  },
+  {
+    "name": "pi7",
+    "remote_port": 43007
+  },
+  {
+    "name": "pi8",
+    "remote_port": 43008
+  },
+  {
+    "name": "pi9",
+    "remote_port": 43009
+  },
+  {
+    "name": "ub1",
+    "remote_port": 44000
+  }
+]
