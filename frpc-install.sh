@@ -10,7 +10,7 @@ HOSTNAME=$(hostname)
 
 # Connect by parameter
 # E.g.
-# curl -s http://192.168.0.88/frpc-install.sh | bash -s --url=167.71.195.82 --port=57000 --token=xxx
+# curl -s http://example.com/frpc-install.sh | bash -s --url=example.com --port=57000 --token=xxx
 
 while [[ "$#" -gt 0 ]]; do
   case $1 in
@@ -82,10 +82,37 @@ else
 fi
 chmod 600 ~/.ssh/authorized_keys
 
+# Determine container name and configuration directory
+CONTAINER_NAME="frpc"
+CONFIG_DIR=~/frpc
+
+if docker ps -a --format '{{.Names}}' | grep -qw "$CONTAINER_NAME"; then
+    read -p "Container '$CONTAINER_NAME' already exists. Do you want to (R)eplace it or (C)reate a new one? [R/C] " -n 1 -r
+    echo
+    case "$REPLY" in
+        c|C)
+            i=1
+            while docker ps -a --format '{{.Names}}' | grep -qw "frpc-$i"; do
+                ((i++))
+            done
+            CONTAINER_NAME="frpc-$i"
+            CONFIG_DIR=~/frpc-$i
+            echo "Will create new container '$CONTAINER_NAME' with config in '$CONFIG_DIR'."
+            ;;
+        r|R)
+            echo "Will replace existing container '$CONTAINER_NAME' using config in '$CONFIG_DIR'."
+            ;;
+        *)
+            echo "Invalid choice. Exiting."
+            exit 1
+            ;;
+    esac
+fi
+
 #=== Generate frpc.toml with device-specific values
-echo "Generating frpc.toml..."
-mkdir -p ~/frpc
-cat > ~/frpc/frpc.toml <<EOL
+echo "Generating frpc.toml in $CONFIG_DIR..."
+mkdir -p "$CONFIG_DIR"
+cat > "$CONFIG_DIR/frpc.toml" <<EOL
 # FRP Client Configuration
 serverAddr = "$FRPS_URL"
 serverPort = $FRPS_PORT
@@ -99,21 +126,22 @@ localPort = 22
 remotePort = $REMOTE_PORT
 EOL
 
-#=======Create docker-compose.yml
-cat > ~/frpc/docker-compose.yml << EOL
+#=== Create docker-compose.yml
+cat > "$CONFIG_DIR/docker-compose.yml" << EOL
 services:
   frpc:
     image: snowdreamtech/frpc:${FRPC_VERSION}
-    container_name: frpc
+    container_name: ${CONTAINER_NAME}
     restart: always
     volumes:
       - ./frpc.toml:/etc/frp/frpc.toml
     network_mode: host
 EOL
 
-#=======Start frpc container
+# Start frpc container
 echo "Starting frpc container..."
-cd ~/frpc
+cd "$CONFIG_DIR"
+docker compose down
 docker compose up -d
 
-echo "Installation and setup completed successfully!"
+echo "Installation and setup for ${CONTAINER_NAME} completed successfully!"
