@@ -36,6 +36,46 @@
     "remote_port": 43009
   },
   {
+    "name": "pi18",
+    "remote_port": 43018
+  },
+  {
+    "name": "pi19",
+    "remote_port": 43019
+  },
+  {
+    "name": "pi20",
+    "remote_port": 43020
+  },
+  {
+    "name": "pi21",
+    "remote_port": 43021
+  },
+  {
+    "name": "pi22",
+    "remote_port": 43022
+  },
+  {
+    "name": "pi23",
+    "remote_port": 43023
+  },
+  {
+    "name": "pi24",
+    "remote_port": 43024
+  },
+  {
+    "name": "pi25",
+    "remote_port": 43025
+  },
+  {
+    "name": "pi26",
+    "remote_port": 43026
+  },
+  {
+    "name": "pi27",
+    "remote_port": 43027
+  },
+  {
     "name": "ub1",
     "remote_port": 44000
   }
