@@ -46,7 +46,7 @@ echo "Fetching devices.json from frp server..."
 DEVICE_FOUND=false
 REMOTE_PORT=""
 # Use curl to fetch JSON and pipe it to grep/awk for parsing
-JSON_CONTENT=$(curl -s http://${FRPS_URL}/devices.json)
+JSON_CONTENT=$(curl -s https://${FRPS_URL}/devices.json)
 if [ $? -ne 0 ]; then
     echo "Error: Failed to fetch devices.json"
     exit 1
