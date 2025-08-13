@@ -44,6 +44,18 @@
     "remote_port": 43013
   },
   {
+    "name": "pi14",
+    "remote_port": 43014
+  },
+  {
+    "name": "pi15",
+    "remote_port": 43015
+  },
+  {
+    "name": "pi16",
+    "remote_port": 43016
+  },
+  {
     "name": "pi18",
     "remote_port": 43018
   },
