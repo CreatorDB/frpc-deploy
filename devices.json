@@ -1,5 +1,9 @@
 [
   {
+    "name": "worker-archive-history",
+    "remote_port": 44001
+  },
+  {
     "name": "pi1",
     "remote_port": 43001
   },
